@@ -1,0 +1,2 @@
+import P from "pino";
+export const logger = P( { timestamp: () => `,"time":"${new Date().toJSON()}"`, transport: { target: "pino-pretty", options: { colorize: true, translateTime: "SYS:standard" } } } );

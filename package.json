@@ -11,8 +11,14 @@
     "typescript": "^4.9.4"
   },
   "dependencies": {
+    "@adiwajshing/keyed-db": "^0.2.4",
+    "@hapi/boom": "^10.0.0",
     "@types/node": "^18.11.18",
+    "@verzach3/baileys-edge": "^5.1.0",
     "concurrently": "^7.6.0",
-    "nodemon": "^2.0.20"
+    "nodemon": "^2.0.20",
+    "pino": "^8.8.0",
+    "pino-pretty": "^9.1.1",
+    "qrcode-terminal": "^0.12.0"
   }
 }
