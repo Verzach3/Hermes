@@ -7,4 +7,5 @@ export default interface BaileysAdapterSettings {
     store?: ReturnType<typeof makeInMemoryStore>;
     makeStore?: boolean;
     storePath?: string;
+    silentLogger?: boolean;
 }

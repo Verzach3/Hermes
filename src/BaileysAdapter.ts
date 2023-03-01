@@ -12,13 +12,15 @@ class BaileysAdapter extends HermesAdapter {
     socket: ReturnType<typeof makeWASocket> | undefined;
     settings: BaileysAdapterSettings;
     authState: { state: AuthenticationState, saveCreds: () => Promise<void> }
-    socketLogger = logger.child({});
+    socketLogger: ReturnType<typeof logger.child>;
     msgRetryCounterMap: MessageRetryMap = {}
     store: ReturnType<typeof makeInMemoryStore> | undefined;
     constructor(authState: { state: AuthenticationState, saveCreds: () => Promise<void> }, settings: BaileysAdapterSettings) {
         super();
         this.authState = authState;
         this.settings = settings;
+        logger.level =settings.silentLogger ? "silent" : "info";
+        this.socketLogger = logger.child({name: "BaileysAdapter"});
         if (settings.makeStore){
             this.store = makeInMemoryStore({logger: this.socketLogger });
         }
@@ -94,7 +96,11 @@ class BaileysAdapter extends HermesAdapter {
                     const upsert = events["messages.upsert"];
                     if (upsert?.type === "notify"){
                         for (const message of upsert.messages){
-                            
+                            const normalizedMessage = forgeMessage(message);
+                            if (normalizedMessage){
+                                this.emit("message", normalizedMessage);
+                                console.log("Emitting message");
+                            }
                         }
                     }
                 }
